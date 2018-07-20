@@ -29,12 +29,12 @@ public class PostDao {
 		
 	}
 	
-	public void insert(Post Post) {
-		sessionFactory.getCurrentSession().save(Post);
+	public void insert(Post post) {
+		sessionFactory.getCurrentSession().save(post);
 	}
 	
-	public void update(Post Post) {
-		sessionFactory.getCurrentSession().update(Post);
+	public void update(Post post) {
+		sessionFactory.getCurrentSession().update(post);
 	}
 	
 	public Post selectById(int id) {

@@ -42,7 +42,7 @@ public class UserDao {
 	}
 	
 	public User selectByEmail(String email) {
-		return sessionFactory.getCurrentSession().createQuery("from Users where email=" + email, User.class).uniqueResult();
+		return sessionFactory.getCurrentSession().get(User.class, email);
 	}
 	
 	public List<User> selectAll() {
