@@ -1,5 +1,7 @@
 package com.chord.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,5 +58,14 @@ public class UserController {
 		userDao.update(user);
 		
 		return "{\"status\" : \"ok\"}";
+	}
+	
+	@GetMapping(value="/getUserFriends.chord")
+	public @ResponseBody List<User> getFriendsOfUser(int userId) {
+		List<User> friends = null;
+		
+		friends = userDao.selectById(userId).getFriends();
+		
+		return friends;
 	}
 }
