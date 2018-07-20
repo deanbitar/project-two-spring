@@ -38,11 +38,15 @@ public class UserDao {
 	}
 	
 	public User selectById(int id) {
-		return sessionFactory.getCurrentSession().get(User.class, id);
+		System.out.println("Retrieveing user with id: " + id);
+		User user = sessionFactory.getCurrentSession().get(User.class, id);
+		System.out.println(user);
+		return user;
 	}
 	
 	public User selectByEmail(String email) {
-		return sessionFactory.getCurrentSession().get(User.class, email);
+		
+		return null;
 	}
 	
 	public List<User> selectAll() {

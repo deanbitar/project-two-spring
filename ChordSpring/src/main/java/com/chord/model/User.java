@@ -57,11 +57,11 @@ public class User {
 	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
 	private List<Post> posts;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "table_friends", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
 	private List<User> friends;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "table_friends", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "userId"))
 	private List<User> friendsOf;
 
@@ -244,7 +244,6 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
 				+ ", dob=" + dob + ", password=" + password + ", genreone=" + genreOne + ", genretwo=" + genreTwo
-				+ ", genrethree=" + genreThree + ", picture=" + picture + ", bio=" + bio + ", posts=" + posts
-				+ ", friends=" + friends + ", friendsOf=" + friendsOf + "]";
+				+ ", genrethree=" + genreThree + ", picture=" + picture + ", bio=" + bio + "]";
 	}
 }
