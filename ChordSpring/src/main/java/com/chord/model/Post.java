@@ -1,5 +1,6 @@
 package com.chord.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenerationTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Posts")
 public class Post {
@@ -23,6 +29,7 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int postId;
 
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name = "author_id")
 	private User author;
@@ -32,9 +39,12 @@ public class Post {
 
 	@Column(name = "picture")
 	private String picture;
+	
+	@Column(name="submit_time", nullable=false)
+	private Date submitTime;
 
 	public Post() {
-	
+		
 	}
 	
 	public Post(User author, String description, String picture) {
@@ -50,6 +60,15 @@ public class Post {
 		this.author = author;
 		this.description = description;
 		this.picture = picture;
+	}
+
+	public Post(int postId, User author, String description, String picture, Date submitTime) {
+		super();
+		this.postId = postId;
+		this.author = author;
+		this.description = description;
+		this.picture = picture;
+		this.submitTime = submitTime;
 	}
 
 	public int getPostId() {
@@ -84,9 +103,17 @@ public class Post {
 		this.picture = picture;
 	}
 
+	public Date getSubmitTime() {
+		return submitTime;
+	}
+
+	public void setSubmitTime(Date submitTime) {
+		this.submitTime = submitTime;
+	}
+
 	@Override
 	public String toString() {
 		return "Post [postId=" + postId + ", description=" + description + ", picture=" + picture
-				+ "]";
+				+ ", submitTime=" + submitTime + "]";
 	}
 }

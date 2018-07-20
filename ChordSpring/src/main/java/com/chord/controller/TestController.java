@@ -1,5 +1,15 @@
 package com.chord.controller;
 
-public class TestController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chord.dao.UserDao;
+import com.chord.model.User;
+
+@Controller
+public class TestController {
+	
+	
 }

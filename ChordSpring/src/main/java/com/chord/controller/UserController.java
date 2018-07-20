@@ -44,4 +44,17 @@ public class UserController {
 		System.out.println("getting user: " + userId);
 		return userDao.selectById(userId);
 	}
+	
+	@GetMapping(value="/addFriend.chord")
+	@ResponseBody
+	public String addFreind(int userId, int friendId) {
+		
+		User user = userDao.selectById(userId);
+		User friend = userDao.selectById(friendId);
+		
+		user.getFriends().add(friend);
+		userDao.update(user);
+		
+		return "{\"status\" : \"ok\"}";
+	}
 }

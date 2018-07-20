@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Users")
 public class User {
@@ -57,10 +59,12 @@ public class User {
 	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
 	private List<Post> posts;
 
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "table_friends", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
 	private List<User> friends;
 
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "table_friends", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "userId"))
 	private List<User> friendsOf;

@@ -1,5 +1,7 @@
 package com.chord.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,12 @@ public class PostController {
 		User user = userDao.selectById(userId);
 		System.out.println("user retrieved");
 		System.out.println(user);
-		Post post = new Post(user, message, picture);
+		
+		Post post = new Post();
+		post.setAuthor(user);
+		post.setDescription(message);
+		post.setPicture(picture);
+		post.setSubmitTime(new Date());
 		
 		System.out.println("inserting post: " + post);
 		
