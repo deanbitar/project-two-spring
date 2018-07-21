@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -46,9 +47,8 @@ public class UserDao {
 
 	public User selectByEmail(String email) {
 
-		User user = sessionFactory.getCurrentSession().createQuery("from Users where email = " + email, User.class)
-				.uniqueResult();
-
+		User user = (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.like("email", email)).uniqueResult();
+		System.out.println(user);
 		return user;
 	}
 

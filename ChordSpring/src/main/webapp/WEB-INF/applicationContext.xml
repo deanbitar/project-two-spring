@@ -18,6 +18,13 @@
 	<tx:annotation-driven />
 	<mvc:annotation-driven />
 
+	<mvc:cors>
+		<mvc:mapping path="/**" allowed-origins="*"
+			allowed-headers="Content-Type, content-type, x-requested-with, Access-Control-Allow-Origin, Access-Control-Allow-Headers, x-auth-token, x-app-id, Origin,Accept, X-Requested-With, Access-Control-Request-Method, Access-Control-Request-Headers"
+			allowed-methods="*"
+			exposed-headers="x-auth-token, Access-Control-Allow-Origin" />
+	</mvc:cors>
+
 	<!-- DATASOURCE -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

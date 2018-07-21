@@ -1,6 +1,7 @@
 package com.chord.model;
 
-import java.util.List;
+import java.util.Set;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -58,17 +59,17 @@ public class User {
 
 	@JsonIgnore
 	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
-	private List<Post> posts;
+	private Set<Post> posts;
 
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "table_friends", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
-	private List<User> friends;
+	private Set<User> friends;
 
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "table_friends", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "userId"))
-	private List<User> friendsOf;
+	private Set<User> friendsOf;
 
 	/*
 	 * @ManyToOne(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
@@ -95,8 +96,8 @@ public class User {
 	}
 	
 	public User(String firstname, String lastname, String email, String dob, String password,
-			String genreone, String genretwo, String genrethree, String picture, String bio, List<Post> posts,
-			List<User> friends, List<User> friendsOf) {
+			String genreone, String genretwo, String genrethree, String picture, String bio, Set<Post> posts,
+			Set<User> friends, Set<User> friendsOf) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -114,8 +115,8 @@ public class User {
 	}
 
 	public User(int userId, String firstname, String lastname, String email, String dob, String password,
-			String genreone, String genretwo, String genrethree, String picture, String bio, List<Post> posts,
-			List<User> friends, List<User> friendsOf) {
+			String genreone, String genretwo, String genrethree, String picture, String bio, Set<Post> posts,
+			Set<User> friends, Set<User> friendsOf) {
 		super();
 		this.userId = userId;
 		this.firstname = firstname;
@@ -221,27 +222,27 @@ public class User {
 		this.bio = bio;
 	}
 
-	public List<Post> getPosts() {
+	public Set<Post> getPosts() {
 		return posts;
 	}
 
-	public void setPosts(List<Post> posts) {
+	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
 
-	public List<User> getFriends() {
+	public Set<User> getFriends() {
 		return friends;
 	}
 
-	public void setFriends(List<User> friends) {
+	public void setFriends(Set<User> friends) {
 		this.friends = friends;
 	}
 
-	public List<User> getFriendsOf() {
+	public Set<User> getFriendsOf() {
 		return friendsOf;
 	}
 
-	public void setFriendsOf(List<User> friendsOf) {
+	public void setFriendsOf(Set<User> friendsOf) {
 		this.friendsOf = friendsOf;
 	}
 

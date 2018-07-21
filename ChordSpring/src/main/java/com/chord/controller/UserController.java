@@ -1,12 +1,15 @@
 package com.chord.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chord.dao.UserDao;
@@ -63,22 +66,24 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/getUserFriends.chord")
-	public @ResponseBody List<User> getFriendsOfUser(int userId) {
-		List<User> friends = null;
+	public @ResponseBody Set<User> getFriendsOfUser(int userId) {
+		Set<User> friends = null;
 		
 		friends = userDao.selectById(userId).getFriends();
 		
 		return friends;
 	}
 	
-	@PostMapping(value="/login.chord")
+	@GetMapping(value="/login.chord")
 	public @ResponseBody User login(String email, String password) {
+		
+		System.out.println("New login request with " + email + " " + password);
 		
 		User user = userDao.selectByEmail(email);
 		
 		if(user == null)
 			return null;
-		else if(user.getPassword() != password)
+		else if(!user.getPassword().equals(password))
 			return null;
 		else {
 			return user;
