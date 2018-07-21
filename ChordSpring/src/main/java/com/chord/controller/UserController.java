@@ -71,7 +71,7 @@ public class UserController {
 		return friends;
 	}
 	
-	@PostMapping(value="/login.Chord")
+	@PostMapping(value="/login.chord")
 	public @ResponseBody User login(String email, String password) {
 		
 		User user = userDao.selectByEmail(email);
