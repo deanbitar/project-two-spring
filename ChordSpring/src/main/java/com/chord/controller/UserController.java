@@ -68,4 +68,18 @@ public class UserController {
 		
 		return friends;
 	}
+	
+	@PostMapping(value="/login.Chord")
+	public @ResponseBody User login(String email, String password) {
+		
+		User user = userDao.selectByEmail(email);
+		
+		if(user == null)
+			return null;
+		else if(user.getPassword() != password)
+			return null;
+		else {
+			return user;
+		}
+	}
 }
