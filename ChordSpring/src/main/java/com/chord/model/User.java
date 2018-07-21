@@ -56,6 +56,7 @@ public class User {
 	@Column(name = "bio")
 	private String bio;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
 	private List<Post> posts;
 
