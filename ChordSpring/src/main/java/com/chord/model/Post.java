@@ -20,6 +20,8 @@ import org.hibernate.annotations.GenerationTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import sun.nio.cs.ext.TIS_620;
+
 @Entity
 @Table(name = "Posts")
 public class Post {
@@ -109,6 +111,15 @@ public class Post {
 
 	public void setSubmitTime(Date submitTime) {
 		this.submitTime = submitTime;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(!obj.getClass().equals(this.getClass()))
+			return false;
+		else
+			return this.getPostId() == ((Post)obj).getPostId();
 	}
 
 	@Override

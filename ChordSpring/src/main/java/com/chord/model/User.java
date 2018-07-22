@@ -245,6 +245,15 @@ public class User {
 	public void setFriendsOf(Set<User> friendsOf) {
 		this.friendsOf = friendsOf;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(!obj.getClass().equals(this.getClass()))
+			return false;
+		else
+			return this.userId == ((User) obj).getUserId();
+	}
 
 	@Override
 	public String toString() {

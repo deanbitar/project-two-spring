@@ -1,6 +1,7 @@
 package com.chord.controller;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +16,8 @@ import com.chord.dao.PostDao;
 import com.chord.dao.UserDao;
 import com.chord.model.Post;
 import com.chord.model.User;
+
+import oracle.net.nt.NTAdapter;
 
 @Controller
 @CrossOrigin(origins="http://localhost:4200")
@@ -53,5 +56,24 @@ public class PostController {
 	public @ResponseBody Set<Post> getUserPosts(int userId) {
 		
 		return userDao.selectById(userId).getPosts();
+	}
+	
+	@GetMapping("/getUserFeed.chord")
+	public @ResponseBody Set<Post> getUserFeed(int userId) {
+		
+		User user = userDao.selectById(userId);
+		Set<User> friends = user.getFriends();
+		Set<User> friendsOf = user.getFriendsOf();
+		
+		Set<User> intersection = new HashSet<User>(friends);
+		intersection.retainAll(friendsOf);
+		
+		Set<Post> feed = new HashSet<Post>(user.getPosts());
+		
+		for(User friend: intersection) {
+			feed.addAll(friend.getPosts());
+		}
+		
+		return feed;
 	}
 }
