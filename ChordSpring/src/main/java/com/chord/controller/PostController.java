@@ -2,6 +2,7 @@ package com.chord.controller;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +56,9 @@ public class PostController {
 	}
 	
 	@GetMapping("/getUserFeed.chord")
-	public @ResponseBody Set<Post> getUserFeed(int userId) {
+	public @ResponseBody List<Post> getUserFeed(int userId) {
 		
-		User user = userDao.selectById(userId);
+		/*User user = userDao.selectById(userId);
 		Set<User> friends = user.getFriends();
 		Set<User> friendsOf = user.getFriendsOf();
 		
@@ -68,8 +69,8 @@ public class PostController {
 		
 		for(User friend: intersection) {
 			feed.addAll(friend.getPosts());
-		}
+		}*/
 		
-		return feed;
+		return postDao.selectAll();
 	}
 }
