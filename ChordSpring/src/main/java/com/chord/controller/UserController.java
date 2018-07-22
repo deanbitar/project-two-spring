@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chord.dao.UserDao;
 import com.chord.model.User;
+import com.chord.util.Hash;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
@@ -47,7 +48,7 @@ public class UserController {
 		user.setLastname(lastname);
 		user.setEmail(email);
 		user.setDob(dob);
-		user.setPassword(password);
+		user.setPassword(Hash.sha256(password));
 		user.setGenreOne(genreOne);
 		user.setGenreTwo(genreTwo);
 		user.setGenreThree(genreThree);
@@ -101,9 +102,11 @@ public class UserController {
 		
 		User user = userDao.selectByEmail(email);
 		
+		String hashPass = Hash.sha256(password);
+		
 		if(user == null)
 			return null;
-		else if(!user.getPassword().equals(password))
+		else if(!user.getPassword().equals(hashPass))
 			return null;
 		else {
 			return user;
