@@ -2,10 +2,8 @@ package com.chord.controller;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,8 +14,6 @@ import com.chord.dao.PostDao;
 import com.chord.dao.UserDao;
 import com.chord.model.Post;
 import com.chord.model.User;
-
-import oracle.net.nt.NTAdapter;
 
 @Controller
 @CrossOrigin(origins="http://localhost:4200")
