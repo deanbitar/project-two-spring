@@ -24,7 +24,6 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int postId;
 
-	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name = "author_id")
 	private User author;
