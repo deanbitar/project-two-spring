@@ -43,6 +43,6 @@ public class PostDao {
 	}
 	
 	public List<Post> selectAll() {
-		return sessionFactory.getCurrentSession().createQuery("from Posts", Post.class).list();
+		return sessionFactory.getCurrentSession().createQuery("from Post", Post.class).list();
 	}
 }
