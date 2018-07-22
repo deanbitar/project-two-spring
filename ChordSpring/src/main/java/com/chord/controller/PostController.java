@@ -1,7 +1,10 @@
 package com.chord.controller;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,5 +47,11 @@ public class PostController {
 		System.out.println("inserted post: " + post);
 		
 		return post;
+	}
+	
+	@GetMapping("/getUserPosts.chord")
+	public @ResponseBody Set<Post> getUserPosts(int userId) {
+		
+		return userDao.selectById(userId).getPosts();
 	}
 }
