@@ -109,4 +109,9 @@ public class UserController {
 			return user;
 		}
 	}
+	
+	@GetMapping("/searchUserByName.chord")
+	public @ResponseBody List<User> searchUsers(String name) {
+		return userDao.searchByName(name);
+	}
 }

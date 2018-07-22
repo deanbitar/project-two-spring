@@ -51,7 +51,12 @@ public class UserDao {
 		System.out.println(user);
 		return user;
 	}
-
+	
+	public List<User> searchByName(String name) {
+		//Restrictions restrictions = Restrictions.or(Restrictions.like("firstname", name)),
+		List<User> users = sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.like("firstname", name)).list();
+		return users;
+	}
 	public List<User> selectAll() {
 		return sessionFactory.getCurrentSession().createQuery("from Users", User.class).list();
 	}
