@@ -3,6 +3,7 @@ package com.chord.controller;
 import java.util.List;
 import java.util.Set;
 
+import javax.print.DocFlavor.STRING;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,7 +37,9 @@ public class UserController {
 	
 	@GetMapping(value="/createUser.chord")
 	public @ResponseBody User createNewUser(String firstname, String lastname, String email,
-			String dob, String password, String genreOne) {
+			String dob, String password, String genreOne, String genreTwo, String genreThree) {
+		
+		System.out.println("Create request with firstname: " + firstname + " last name " + lastname);
 		
 		User user = new User();
 		
@@ -46,6 +49,8 @@ public class UserController {
 		user.setDob(dob);
 		user.setPassword(password);
 		user.setGenreOne(genreOne);
+		user.setGenreTwo(genreTwo);
+		user.setGenreThree(genreThree);
 		
 		System.out.println("Adding user: " + user);
 		
