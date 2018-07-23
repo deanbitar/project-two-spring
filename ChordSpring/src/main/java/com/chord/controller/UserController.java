@@ -3,10 +3,12 @@ package com.chord.controller;
 import java.util.List;
 import java.util.Set;
 
+import javax.jws.soap.SOAPBinding.Use;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -109,5 +111,23 @@ public class UserController {
 	@GetMapping("/searchUserByName.chord")
 	public @ResponseBody List<User> searchUsers(String name) {
 		return userDao.searchByName(name);
+	}
+	
+	@GetMapping("/updateUser.chord")
+	public @ResponseBody User updateUser(int userId, String email, String dob, String bio, String genreOne, String genreTwo, String genreThree) {
+		
+		User user = userDao.selectById(userId);
+		
+		user.setEmail(email);
+		user.setDob(dob);
+		user.setBio(bio);
+		user.setGenreOne(genreOne);
+		user.setGenreTwo(genreTwo);
+		user.setGenreThree(genreThree);
+		
+		userDao.update(user);
+		user = userDao.selectById(userId);
+		
+		return user;
 	}
 }
