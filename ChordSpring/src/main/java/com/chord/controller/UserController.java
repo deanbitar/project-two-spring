@@ -3,6 +3,7 @@ package com.chord.controller;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
@@ -11,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.chord.dao.UserDao;
 import com.chord.model.User;
 import com.chord.util.Email;
@@ -23,6 +21,7 @@ import com.chord.util.PassGen;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:4200")
+@MultipartConfig
 public class UserController {
 
 	@Autowired
@@ -136,8 +135,10 @@ public class UserController {
 
 	@PostMapping("/updateUserPic.chord")
 	@ResponseBody
-	private void runImportRecordsJob(@RequestParam("file") MultipartFile file) {
-		System.out.println(file);
+	private void runImportRecordsJob(HttpServletRequest request, HttpServletRequest response) {
+		System.out.println("new picture request");
+		System.out.println(request.getParameterMap().entrySet());
+		System.out.println();
 	}
 
 	@GetMapping("/forgetPassword.chord")

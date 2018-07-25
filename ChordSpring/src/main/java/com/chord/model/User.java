@@ -1,6 +1,7 @@
 package com.chord.model;
 
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -67,6 +68,10 @@ public class User {
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "table_friends", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "userId"))
 	private Set<User> friendsOf;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy="likedUsers", fetch=FetchType.EAGER)
+	Set<Post> likedPosts;
 
 	/*
 	 * @ManyToOne(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
@@ -112,8 +117,8 @@ public class User {
 	}
 
 	public User(int userId, String firstname, String lastname, String email, String dob, String password,
-			String genreone, String genretwo, String genrethree, String picture, String bio, Set<Post> posts,
-			Set<User> friends, Set<User> friendsOf) {
+			String genreOne, String genreTwo, String genreThree, String picture, String bio, Set<Post> posts,
+			Set<User> friends, Set<User> friendsOf, Set<Post> likePosts) {
 		super();
 		this.userId = userId;
 		this.firstname = firstname;
@@ -121,14 +126,15 @@ public class User {
 		this.email = email;
 		this.dob = dob;
 		this.password = password;
-		this.genreOne = genreone;
-		this.genreTwo = genretwo;
-		this.genreThree = genrethree;
+		this.genreOne = genreOne;
+		this.genreTwo = genreTwo;
+		this.genreThree = genreThree;
 		this.picture = picture;
 		this.bio = bio;
 		this.posts = posts;
 		this.friends = friends;
 		this.friendsOf = friendsOf;
+		this.likedPosts = likePosts;
 	}
 
 	public int getUserId() {
@@ -242,7 +248,15 @@ public class User {
 	public void setFriendsOf(Set<User> friendsOf) {
 		this.friendsOf = friendsOf;
 	}
-	
+
+	public Set<Post> getLikedPosts() {
+		return likedPosts;
+	}
+
+	public void setLikedPosts(Set<Post> likePosts) {
+		this.likedPosts = likePosts;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		

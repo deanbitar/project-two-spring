@@ -1,6 +1,7 @@
 package com.chord.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,23 +25,27 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int postId;
 
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "author_id")
 	private User author;
 
-	@Column(name = "description", nullable=false)
+	@Column(name = "description", nullable = false)
 	private String description;
 
 	@Column(name = "picture")
 	private String picture;
-	
-	@Column(name="submit_time", nullable=false)
+
+	@Column(name = "submit_time", nullable = false)
 	private Date submitTime;
 
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "LIKED_POSTS", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	Set<User> likedUsers;
+
 	public Post() {
-		
+
 	}
-	
+
 	public Post(User author, String description, String picture) {
 		super();
 		this.author = author;
@@ -61,6 +68,16 @@ public class Post {
 		this.description = description;
 		this.picture = picture;
 		this.submitTime = submitTime;
+	}
+
+	public Post(int postId, User author, String description, String picture, Date submitTime, Set<User> usersLiked) {
+		super();
+		this.postId = postId;
+		this.author = author;
+		this.description = description;
+		this.picture = picture;
+		this.submitTime = submitTime;
+		this.likedUsers = usersLiked;
 	}
 
 	public int getPostId() {
@@ -102,19 +119,27 @@ public class Post {
 	public void setSubmitTime(Date submitTime) {
 		this.submitTime = submitTime;
 	}
-	
+
+	public Set<User> getLikedUsers() {
+		return likedUsers;
+	}
+
+	public void setLikedUsers(Set<User> likedUsers) {
+		this.likedUsers = likedUsers;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		
-		if(!obj.getClass().equals(this.getClass()))
+
+		if (!obj.getClass().equals(this.getClass()))
 			return false;
 		else
-			return this.getPostId() == ((Post)obj).getPostId();
+			return this.getPostId() == ((Post) obj).getPostId();
 	}
 
 	@Override
 	public String toString() {
-		return "Post [postId=" + postId + ", description=" + description + ", picture=" + picture
-				+ ", submitTime=" + submitTime + "]";
+		return "Post [postId=" + postId + ", description=" + description + ", picture=" + picture + ", submitTime="
+				+ submitTime + "likedUsers=" + likedUsers + "]";
 	}
 }

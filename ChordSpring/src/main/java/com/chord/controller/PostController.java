@@ -1,7 +1,6 @@
 package com.chord.controller;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -72,5 +71,17 @@ public class PostController {
 		}*/
 		
 		return postDao.selectAll();
+	}
+	
+	@GetMapping("/likePost")
+	public @ResponseBody Post likePost(int userId, int postId) {
+		
+		User user = userDao.selectById(userId);
+		Post post = postDao.selectById(postId);
+		
+		post.getLikedUsers().add(user);
+		postDao.update(post);
+		
+		return postDao.selectById(postId);
 	}
 }
