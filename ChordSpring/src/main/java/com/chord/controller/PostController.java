@@ -73,8 +73,10 @@ public class PostController {
 		return postDao.selectAll();
 	}
 	
-	@GetMapping("/likePost")
+	@GetMapping("/likePost.chord")
 	public @ResponseBody Post likePost(int userId, int postId) {
+		
+		System.out.println("new like request");
 		
 		User user = userDao.selectById(userId);
 		Post post = postDao.selectById(postId);
@@ -84,4 +86,20 @@ public class PostController {
 		
 		return postDao.selectById(postId);
 	}
+	
+	/*@GetMapping("/unlikePost")
+	public @ResponseBody Post unlikePost(int userId, int postId) {
+		
+		User user = userDao.selectById(userId);
+		Post post = postDao.selectById(postId);
+		
+		System.out.println(post);
+		System.out.println(post.getLikedUsers().contains(user));
+		//System.out.println(post.getLikedUsers());
+		post.getLikedUsers().remove(user);
+		System.out.println(post);
+		postDao.update(post);
+		
+		return postDao.selectById(postId);
+	}*/
 }
