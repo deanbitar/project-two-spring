@@ -44,7 +44,7 @@ public class UserController {
 		user.setEmail(email);
 		user.setDob(dob);
 		user.setPassword(Hash.sha256(password));
-		user.setPicture("https://image.ibb.co/jqsPDd/profile.jpg");
+		user.setPicture("http://apagnikulakshatriya.com/images/male.jpg");
 		user.setGenreOne(genreOne);
 		user.setGenreTwo(genreTwo);
 		user.setGenreThree(genreThree);
