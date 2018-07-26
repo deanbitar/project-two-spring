@@ -32,28 +32,33 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/createUser.chord")
-	public @ResponseBody User createNewUser(String firstname, String lastname, String email, String dob,
+	@ResponseBody
+	public String createNewUser(String firstname, String lastname, String email, String dob,
 			String password, String genreOne, String genreTwo, String genreThree) {
 
-		System.out.println("Create request with firstname: " + firstname + " last name " + lastname);
+		System.out.println("Create request with firstname: " + firstname + " last name " + lastname + " email " + email);
+		
+		if(userDao.selectByEmail(email) == null) {
+			User user = new User();
 
-		User user = new User();
+			user.setFirstname(firstname);
+			user.setLastname(lastname);
+			user.setEmail(email);
+			user.setDob(dob);
+			user.setPassword(Hash.sha256(password));
+			user.setPicture("http://apagnikulakshatriya.com/images/male.jpg");
+			user.setGenreOne(genreOne);
+			user.setGenreTwo(genreTwo);
+			user.setGenreThree(genreThree);
 
-		user.setFirstname(firstname);
-		user.setLastname(lastname);
-		user.setEmail(email);
-		user.setDob(dob);
-		user.setPassword(Hash.sha256(password));
-		user.setPicture("http://apagnikulakshatriya.com/images/male.jpg");
-		user.setGenreOne(genreOne);
-		user.setGenreTwo(genreTwo);
-		user.setGenreThree(genreThree);
-
-		System.out.println("Adding user: " + user);
-
-		userDao.insert(user);
-
-		return user;
+			userDao.insert(user);
+			
+			System.out.println("Adding user: " + user);
+			return "{\"status\" : \"ok\"}";
+		}
+		else {
+			return "{\"status\" : \"email taken\"}";
+		}
 	}
 
 	@GetMapping(value = "/getUser.chord")

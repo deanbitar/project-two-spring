@@ -53,10 +53,14 @@ public class UserDao {
 	}
 	
 	public List<User> searchByName(String name) {
-		//Restrictions restrictions = Restrictions.or(Restrictions.like("firstname", name)),
-		List<User> users = sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.like("firstname", name)).list();
+		
+		name = name.toLowerCase();
+		List<User> users = sessionFactory.getCurrentSession().createQuery("from User where lower(firstname) like '%" + name + "%'").list();
+		System.out.println("serching for name: " + name);
+		System.out.println(users);
 		return users;
 	}
+	
 	public List<User> selectAll() {
 		return sessionFactory.getCurrentSession().createQuery("from Users", User.class).list();
 	}
