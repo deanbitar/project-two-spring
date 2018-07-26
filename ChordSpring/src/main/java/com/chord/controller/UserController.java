@@ -1,8 +1,6 @@
 package com.chord.controller;
 
 import java.util.List;
-import java.util.Set;
-
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +17,13 @@ import com.chord.util.Email;
 import com.chord.util.Hash;
 import com.chord.util.PassGen;
 
+/**
+ * This class is a controller class used to respond to HTTP methods and
+ * perform actions against User objects
+ * 
+ * @author Ezzdean Bietar
+ *
+ */
 @Controller
 @CrossOrigin(origins = "http://localhost:4200")
 @MultipartConfig
@@ -31,6 +36,19 @@ public class UserController {
 
 	}
 
+	/**
+	 * Creates a new User with parameters passed in from the HTTP request.
+	 * 
+	 * @param firstname
+	 * @param lastname
+	 * @param email
+	 * @param dob
+	 * @param password
+	 * @param genreOne
+	 * @param genreTwo
+	 * @param genreThree
+	 * @return a JOSN with status of either 'ok' or 'email taken'
+	 */
 	@GetMapping(value = "/createUser.chord")
 	@ResponseBody
 	public String createNewUser(String firstname, String lastname, String email, String dob,
@@ -61,12 +79,25 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Returns the User object with the id parameter in JSON.
+	 * 
+	 * @param userId
+	 * @return the JSON of the user, or null if the user doesn't exist
+	 */
 	@GetMapping(value = "/getUser.chord")
 	public @ResponseBody User getUser(int userId) {
 		System.out.println("getting user: " + userId);
 		return userDao.selectById(userId);
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param userId
+	 * @param friendId
+	 * @return
+	 *//*
 	@GetMapping(value = "/addFriend.chord")
 	@ResponseBody
 	public String addFreind(int userId, int friendId) {
@@ -87,8 +118,16 @@ public class UserController {
 		friends = userDao.selectById(userId).getFriends();
 
 		return friends;
-	}
+	}*/
 
+	/**
+	 * Checks the credentials of a User and returns the JSON if the email
+	 * and password are a match.
+	 * 
+	 * @param request
+	 * @param response
+	 * @return User JSON if the credentials match, or null otherwise
+	 */
 	@PostMapping(value = "/login.chord")
 	public @ResponseBody User login(HttpServletRequest request, HttpServletResponse response) {
 
@@ -114,11 +153,31 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Returns a list of Users that have the name parameter in their firstnames.
+	 * The list is returned 
+	 * 
+	 * @param name
+	 * @return
+	 */
 	@GetMapping("/searchUserByName.chord")
 	public @ResponseBody List<User> searchUsers(String name) {
 		return userDao.searchByName(name);
 	}
 
+	/**
+	 * Updates the properties of the User with the specified id parameter.
+	 * 
+	 * @param userId
+	 * @param email
+	 * @param dob
+	 * @param bio
+	 * @param picture
+	 * @param genreOne
+	 * @param genreTwo
+	 * @param genreThree
+	 * @return the User with the updated data in JSON.
+	 */
 	@GetMapping("/updateUser.chord")
 	public @ResponseBody User updateUser(int userId, String email, String dob, String bio, String picture,
 			String genreOne, String genreTwo, String genreThree) {
@@ -139,6 +198,12 @@ public class UserController {
 		return user;
 	}
 
+	/**
+	 * Updates the profile picture of the User with the id parameter.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	@PostMapping("/updateUserPic.chord")
 	@ResponseBody
 	private void runImportRecordsJob(HttpServletRequest request, HttpServletRequest response) {
@@ -147,6 +212,14 @@ public class UserController {
 		System.out.println();
 	}
 
+	/**
+	 * Assigns a randomly generated String as the new password of the User
+	 * with the matching email parameter. An email with the temporary password
+	 * will also be sent the email address.
+	 * 
+	 * @param email
+	 * @return the status in JSON of either 'ok' or 'bad-email'
+	 */
 	@GetMapping("/forgetPassword.chord")
 	@ResponseBody
 	public String forPass(String email) {
@@ -163,6 +236,25 @@ public class UserController {
 			Email.sendTempPass(email, tempPassword);
 		}
 	
+		return "{\"status\" : \"ok\"}";
+	}
+	
+	/**
+	 * Updates the password of the User with the specified id parameter to
+	 * the new password parameter
+	 * 
+	 * @param userId
+	 * @param newPassword
+	 * @return status 'ok' in JSON
+	 */
+	@GetMapping("/changePassword.chord")
+	@ResponseBody
+	public String changeUserPass(int userId, String newPassword) {
+		
+		User user = userDao.selectById(userId);
+		user.setPassword(Hash.sha256(newPassword));
+		userDao.update(user);
+		
 		return "{\"status\" : \"ok\"}";
 	}
 }

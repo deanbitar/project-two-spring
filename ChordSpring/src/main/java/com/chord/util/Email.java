@@ -10,8 +10,23 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * 
+ * This class is used to send users am email containing their temporary password.
+ * There is a single static method in this class.
+ * 
+ * @author Ezzdean Bietar
+ *
+ */
 public class Email {
 
+	/**
+	 * This method will send an email to the address containing
+	 * a message with the temporary password.
+	 * 
+	 * @param email - The Users's email.
+	 * @param tempPass - The User's temporary password
+	 */
 	public static void sendTempPass(String email, String tempPass) {
 
 		// Recipient's email ID needs to be mentioned.

@@ -16,6 +16,12 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * This class is the model representation of Users in the database.
+ * 
+ * @author Ezzdean Bietar
+ *
+ */
 @Entity
 @Table(name = "Users")
 public class User {

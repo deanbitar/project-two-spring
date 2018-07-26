@@ -16,6 +16,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * This class is the model representation of Posts in the database.
+ * 
+ * @author Ezzdean Bietar
+ *
+ */
 @Entity
 @Table(name = "Posts")
 public class Post {
